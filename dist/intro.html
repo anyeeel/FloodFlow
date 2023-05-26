@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer src = “./main.js”></script>
+    <link rel ="stylesheet" type="text/css" href="animation.css">
+</head>
+<body>
+    
+    <div class="content">
+        <a href="#" class="button">
+        <h2>FloodFlow</h2>
+        <h2>FloodFlow</h2>
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var floodFlow = document.querySelector('.content h2');
+            var content = document.querySelector('.content');
+
+            floodFlow.addEventListener('click', function () {
+                content.classList.add('transition');
+                document.body.classList.add('filling');
+
+                // Redirect after a delay (adjust the delay as needed)
+                setTimeout(function () {
+                    window.location.href = 'dashboard.html'; 
+                }, 1000);
+            });
+        });
+    </script>
+
+</body>
+</html>
