@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FloodFlow</title>
+    <link rel="icon" type="image" href="trans.png" />
     <script defer src = “./main.js”></script>
     <link rel ="stylesheet" type="text/css" href="animation.css">
 </head>
@@ -17,28 +18,27 @@
         </a>
     </div>
 
-    <!---<div class="modal" id="modal">
+    <!--<div class="modal" id="modal">
         <div class="modal-content">
-            <h3>Welcome Aboard, Captain</h3>
             <button onclick="redirectToDashboard()">View as guest</button>
             <button onclick="redirectToLogin()">Records</button>
         </div>
     </div>--->
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var floodFlow = document.querySelector('.floodflow');
-      
-        floodFlow.addEventListener('click', function (event) {
-          event.preventDefault();
-          redirectToLogin();
+          document.addEventListener('DOMContentLoaded', function () {
+            var floodFlow = document.querySelector('.floodflow');
+            var modal = document.getElementById('modal');
+
+            floodFlow.addEventListener('click', function (event) {
+                event.preventDefault();
+                document.body.classList.add('blue-background');
+                window.location.href = 'login.html';
+            });
         });
-      });
-      
-      function redirectToLogin() {
-        window.location.href = 'login.html';
-      }
-      
-</script>
+
+  
+    </script>
+
 </body>
 </html>

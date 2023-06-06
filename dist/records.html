@@ -35,22 +35,27 @@
                 <li>
                     <a href="#">
                         <span class="icon"><i class="ri-handbag-line"></i></span>
-                        <div class="sidebar--item">History</div>
+                        <div class="sidebar--item">Records</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class="ri-user-line"></i></span>
+                        <div class="sidebar--item">Administrators</div>
                     </a>
                 </li>
                
+                    <a href="#">
+                        <span class="icon"><i class="ri-settings-3-line"></i></span>
+                        <div class="sidebar--item">Settings</div>
+                    </a>
+                </li>
             </ul>
             <ul class="sidebar--bottom--items">
                 <li>
                     <a href="#">
-                        <span class="icon"><i class="ri-question-line"></i></span>
-                        <div class="sidebar--item">Help</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
                         <span class="icon"><i class="ri-logout-box-r-line"></i></span>
-                        <div class="sidebar--item">Logout</div>
+                        <div class="sidebar--item" id="logout">Logout</div>
                     </a>
                 </li>
             </ul>
@@ -67,15 +72,31 @@
                 <div class="chartBox">
                   <canvas id="myChart"></canvas>
                 </div>
-                <div class="chartBox">
-                    <canvas id="lineChart"></canvas>
-                </div>
               </div>    
            
         </div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
     <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+
+    const firebaseConfig = {
+          apiKey: "AIzaSyDCZAR5sLXy_H2bwkwSAJ0g2lgiR0MuwlI",
+          authDomain: "ababonbabantocs2.firebaseapp.com",
+          projectId: "ababonbabantocs2",
+          storageBucket: "ababonbabantocs2.appspot.com",
+          messagingSenderId: "404747337011",
+          appId: "1:404747337011:web:767c832524de2971901246",
+          measurementId: "G-KSWRBVNXQW"
+        };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+      
       let body = document.querySelector(".body")
 let sun = document.querySelector(".sun")
 let moon = document.querySelector(".moon")
@@ -100,9 +121,8 @@ mainContainer.onclick = function(){
 }
 
 
-  
-    // setup 
-    const data = {
+      // setup 
+      const data = {
       labels: ['Normal', 'Warning', 'Danger'],
       datasets: [{
         label: 'Water Level',
@@ -183,26 +203,6 @@ ctx.fill();
       
     };
 
-    // Responsive chart size
-function resizeChart() {
-  const chartContainer = document.getElementById('chart-container');
-  const chartCanvas = document.getElementById('chart-canvas');
-  chartCanvas.width = chartContainer.clientWidth;
-  chartCanvas.height = chartContainer.clientHeight;
-}
-
-// Initialize chart
-const chartContainer = document.getElementById('chart-container');
-const chartCanvas = document.createElement('canvas');
-chartCanvas.id = 'chart-canvas';
-chartContainer.appendChild(chartCanvas);
-
-const chart = new Chart(chartCanvas, config);
-
-// Resize chart on window resize
-window.addEventListener('resize', resizeChart);
-resizeChart();
-
     // render init block
     const myChart = new Chart(
       document.getElementById('myChart'),
@@ -221,22 +221,24 @@ resizeChart();
     }
   ]
 };
-  // Create a line chart
-const lineChartCtx = document.getElementById('lineChart').getContext('2d');
-const lineChart = new Chart(lineChartCtx, {
-  type: 'line',
-  data: data,
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 25
-      }
-    }
-  }
-});
-
   
+//----- Logout code start	  
+document.getElementById("logout").addEventListener("click", function() {
+		  signOut(auth).then(() => {
+			  // Sign-out successful.
+			  console.log('Sign-out successful.');
+			  alert('logged out succesfully');
+
+                setTimeout(function(){
+                    window.location.href = "index.html";
+                }, 2000);
+                // ...
+
+			}).catch((error) => {
+			  // An error happened.
+			  console.log('An error happened.');
+			});		  		  
+	  });
     </script>
 
 
