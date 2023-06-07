@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="login.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -42,14 +43,14 @@
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
     const firebaseConfig = {
-          apiKey: "AIzaSyDCZAR5sLXy_H2bwkwSAJ0g2lgiR0MuwlI",
-          authDomain: "ababonbabantocs2.firebaseapp.com",
-          projectId: "ababonbabantocs2",
-          storageBucket: "ababonbabantocs2.appspot.com",
-          messagingSenderId: "404747337011",
-          appId: "1:404747337011:web:767c832524de2971901246",
-          measurementId: "G-KSWRBVNXQW"
-        };
+      apiKey: "AIzaSyDCZAR5sLXy_H2bwkwSAJ0g2lgiR0MuwlI",
+      authDomain: "ababonbabantocs2.firebaseapp.com",
+      projectId: "ababonbabantocs2",
+      storageBucket: "ababonbabantocs2.appspot.com",
+      messagingSenderId: "404747337011",
+      appId: "1:404747337011:web:767c832524de2971901246",
+      measurementId: "G-KSWRBVNXQW"
+    };
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
@@ -65,16 +66,28 @@
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
-          alert(user.email + " Login successful!");
-          window.location.href = "records.html";
+          Swal.fire({
+            icon: "success",
+            title: "Login successful!",
+            text: user.email,
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            window.location.href = "records.html";
+          });
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorMessage);
-          alert(errorMessage);
+          Swal.fire({
+            icon: "error",
+            title: "Login failed!",
+            text: errorMessage
+          });
         });
     });
   </script>
 </body>
 </html>
+
