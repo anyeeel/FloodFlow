@@ -212,6 +212,7 @@ a.active{
     overflow-x: hidden;
     background-color: var(--bg-color-second);
     z-index: 2;
+    display: flex;
 }
 
 .section--title{
@@ -222,6 +223,10 @@ a.active{
     color: var(--text-color-second);
 }
 
+.chartTitle {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
 
 /* cards */
@@ -263,12 +268,47 @@ a.active{
   justify-content: center;
 }
 .chartBox {
-  width: 500px;
+  width: 400px;
   padding: 20px;
   border-radius: 20px;
   border: solid 3px rgba(54, 162, 235, 1);
   background: white;
 }
+
+.chartBox1 {
+    width: 400px;
+    padding: 20px;
+    border-radius: 20px;
+    border: solid 3px rgba(54, 162, 235, 1);
+    background: white;
+    position: relative;
+    margin-left: 30px;
+  }
+
+.chartBox {
+    display: flex;
+  }
+  
+  .chartContainer {
+    flex: 1;
+    padding: 10px;
+  }
+  
+  .chartBox,
+  .chartBox1 {
+    flex: 1;
+    width: 400px;
+    padding: 20px;
+    border-radius: 20px;
+    border: solid 3px rgba(54, 162, 235, 1);
+    background: white;
+  }
+  
+  .chartBox1:first-child {
+    margin-left: 0;
+    margin-right: 30px;
+  }
+  
 
 /* Responsive styles for phones */
 
@@ -288,7 +328,7 @@ a.active{
     }
   
     .chartBox {
-      width: 90%;
+      width: 100%;
     }
   } 
   
