@@ -21,6 +21,7 @@
                 <i class="ri-moon-line moon"></i>
                 <i class="ri-sun-line sun"></i>
             </div>
+            <div id="timestamp"></div>
         </div>
     </section>
     <section class="main">
@@ -33,7 +34,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="2records.html">
+                    <a href="table.html">
                         <span class="icon"><i class="ri-handbag-line"></i></span>
                         <div class="sidebar--item">Records</div>
                     </a>
@@ -60,35 +61,35 @@
                 </li>
             </ul>
         </div>
-        <!-------main-->
-        <div class="title">
-            <h1 class="title">Flood Monitoring System</h1>
-        </div>
-        <div class="main--container">
-            <div class="section--title">
-                
-            </div>
-            <div class="cards">
-            </div>
-            <div class="chartBox">
-                <div class="chartContainer">
-                  <canvas id="gaugeChart"></canvas>
-                </div>
-              </div>
-              <div class="chartBox1">
-
-                    <canvas id="lineChart"></canvas>
-                  </div>
-              </div>
-             
+         <!-------main-->
+         <div class="title">
+          <h1 class="title">Flood Monitoring System</h1>
+      </div>
+      <div class="main--container">
+          <div class="section--title">
               
-        </div>
-    </section>
+          </div>
+          <div class="cards">
+          </div>
+            <div class="chartBox">
+
+                  <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+           
+            
+      </div>
+  </section>
+      <!-- Firebase SDK -->
+        <!-- Required to import here in html because of using snapshot/onsnapshot function -->
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
  
         const firebaseConfig = {
             apiKey: "AIzaSyDCZAR5sLXy_H2bwkwSAJ0g2lgiR0MuwlI",
@@ -103,7 +104,6 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
 
         let body = document.querySelector(".body");
         let sun = document.querySelector(".sun");
@@ -129,23 +129,32 @@
             sidebar.classList.remove("activemenu");
         };
 
-   // Retrieve data from Firestore
-const docRef = doc(db, "FloodFlow", "fields");
+        function updateTimestamp() {
+            const timestampElement = document.getElementById("timestamp");
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+            const formattedTimestamp = now.toLocaleDateString('en-US', options);
+            timestampElement.textContent = formattedTimestamp;
+        }
 
-getDoc(docRef)
-  .then((docSnap) => {
-    if (docSnap.exists()) {
-      const gaugeData = {
+        // Update the timestamp initially
+        updateTimestamp();
+
+        // Update the timestamp every second
+        setInterval(updateTimestamp, 1000);
+
+        // setup gauge chart
+        const gaugeData = {
             labels: ['Normal', 'Warning', 'Danger'],
             datasets: [{
                 label: 'Water Level',
-                data: docSnap.data().waterLevel,
+                data: [12, 8, 5],
                 backgroundColor: [
                     'rgba(75, 192, 192, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(255, 26, 104, 1)'
                 ],
-                needleValue: docSnap.data().waterLevel,
+                needleValue: 20,
                 borderColor: 'white',
                 borderWidth: 2,
                 cutout: '95%',
@@ -210,57 +219,60 @@ getDoc(docRef)
         };
 
         const gaugeChart = new Chart(
-        document.getElementById('gaugeChart'),
-        gaugeConfig
-      );
-    } else {
-      console.log('No such document!');
-    }
-  })
-  .catch((error) => {
-    console.log('Error getting document:', error);
-  });
+            document.getElementById('gaugeChart'),
+            gaugeConfig
+        );
 
 // Setup line chart
-db.collection('FloodFlow').doc('fields').get()
-  .then((doc) => {
-    if (doc.exists) {
-      const lineData = {
-        labels: doc.data().dateTime, // Replace with the field containing DateTime values in your Firestore document
-        datasets: [{
-          label: 'Water Level',
-          data: doc.data().waterLevels, // Replace with the field containing Water Level values in your Firestore document
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 2
-        }]
-      };
+const lineData = {
+    labels: ['12:00 AM', '03:00 AM', '06:00 AM', '09:00 AM', '12:00 PM', '03:00 PM', '06:00 PM', '09:00 PM'],
+    datasets: [{
+      label: 'Water Level',
+      data: [8, 6, 10, 12, 14, 9, 7, 5],
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 2
+    }]
+  };
   
+  firebase.initializeApp(firebaseConfig);
+
+const db2 = firebase.firestore();  // Function for Database Firestore 
+
+db2.collection("FloodFlow")
+.orderBy("DateTime", "desc")
+.limit(10)
+.onSnapshot(
+  (querySnapshot) => {
+
+  let waterLevels = [];
+    
+    querySnapshot.forEach((doc) => {
+
+          const data = doc.data();
+          const waterLevel = data.WaterLevel;
+          const DateTime = data.DateTime.toDate();;
+          const date = new Date(DateTime).toLocaleString(undefined, { hour: 'numeric', minute: 'numeric', second: 'numeric' });
+
+          waterLevels.push({ x: date, y: waterLevel });
+        });
+
+        console.log("result", waterLevels)
   const lineConfig = {
     type: 'line',
-    data: lineData,
+    data: waterLevels,
     options: {
       responsive: true,
       maintainAspectRatio: false, // Add this line to prevent the chart from maintaining aspect ratio
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 25, // Adjust the maximum value as needed to fit within the chart box
-        }
-      }
+    
     }
   };
-  
+
   const lineChart = new Chart(
-        document.getElementById('lineChart'),
-        lineConfig
-      );
-    } else {
-      console.log('No such document!');
-    }
-  })
-  .catch((error) => {
-    console.log('Error getting document:', error);
+    document.getElementById('lineChart'),
+    lineConfig
+  );
+  
   });
    
   
