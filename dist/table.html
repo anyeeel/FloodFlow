@@ -9,6 +9,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="table.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <title>FloodFlow</title>
@@ -34,7 +35,7 @@
                 <li>
                     <a href="records.html">
                         <span class="icon"><i class="ri-bar-chart-line"></i></span>
-                        <div class="sidebar--item">Data Analytics</div>
+                        <div class="sidebar--item">Data Visualization</div>
                     </a>
                 </li>
                 <li>
@@ -43,18 +44,7 @@
                         <div class="sidebar--item">Records</div>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><i class="ri-user-line"></i></span>
-                        <div class="sidebar--item">Administrators</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><i class="ri-settings-3-line"></i></span>
-                        <div class="sidebar--item">Settings</div>
-                    </a>
-                </li>
+                
             </ul>
             <ul class="sidebar--bottom--items">
                 <li>
@@ -103,8 +93,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
     <script type="module">
         
-         import { getFirestore, getDocs, collection,onSnapshot, doc, deleteDoc,updateDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
-
+        import { getFirestore, getDocs, collection,onSnapshot, doc, deleteDoc,updateDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
  
@@ -123,6 +112,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 firebase.initializeApp(firebaseConfig);
 const db2 = firebase.firestore();  // Function for Database Firestore
+const auth = getAuth(app);
+
 
         let body = document.querySelector(".body");
         let sun = document.querySelector(".sun");
