@@ -16,7 +16,7 @@
   --text-color-second: #3d3c3c;
   --text-color-third: #2979ff;
 
-  --hover-text-color: #fff;
+  --hover-text-color: FFFFFF;
 
   --bg-card-1: #80d8ff;
   --bg-card-2: #1976d2;
@@ -42,6 +42,11 @@
   --bg-card-4: linear-gradient(to bottom right, #1c2331, #1c212f);
 
   --more-and-less: #2979ff;
+}
+
+#timestamp {
+    font-size: 14px;
+    color: #888;
 }
 
 /* header */
@@ -201,18 +206,19 @@ a.active{
 
 /* main--container */
 
-.main--container{
+.main--container {
     position: absolute;
     top: 0;
     right: 0;
     height: 100%;
-    width: calc(100% - 300px);
+    width: calc(100% - 200px);
     padding: 30px;
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: var(--bg-color-second);
     z-index: 2;
     display: flex;
+    align-items: flex-start; /* Adjust alignment based on your preference */
 }
 
 .section--title{
@@ -249,26 +255,9 @@ a.active{
   padding: 0;
   font-family: sans-serif;
 }
-.chartMenu {
-  width: 100vw;
-  height: 40px;
-  background: #1A1A1A;
-  color: rgba(54, 162, 235, 1);
-}
-.chartMenu p {
-  padding: 10px;
-  font-size: 20px;
-}
-.chartCard {
-  width: 100vw;
-  height: calc(100vh - 40px);
-  background: rgba(54, 162, 235, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 .chartBox {
-  width: 400px;
+  width:900px;
   padding: 20px;
   border-radius: 20px;
   border: solid 3px rgba(54, 162, 235, 1);
@@ -276,38 +265,82 @@ a.active{
 }
 
 .chartBox1 {
-    width: 400px;
+    width: 900px;
+    margin-left: 50px;
     padding: 20px;
     border-radius: 20px;
     border: solid 3px rgba(54, 162, 235, 1);
     background: white;
-    position: relative;
-    margin-left: 30px;
   }
 
-.chartBox {
-    display: flex;
-  }
-  
-  .chartContainer {
-    flex: 1;
-    padding: 10px;
-  }
-  
-  .chartBox,
-  .chartBox1 {
-    flex: 1;
-    width: 400px;
+  .chartBox2 {
+    height: 300px;
+    width: 300px;
+    margin-left: 90px;
     padding: 20px;
+    align-items: center;
     border-radius: 20px;
     border: solid 3px rgba(54, 162, 235, 1);
     background: white;
   }
   
-  .chartBox1:first-child {
-    margin-left: 0;
-    margin-right: 30px;
+  .timechart{
+    width: 90%;
+    height: 450px;
+    margin: auto;
+    
+}
+
+#statusIndicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    margin-left: 40%;
+    height: 50px;
+    margin-top: 40%;
+    border-radius: 50%;
+    animation: blinkAnimation 5s infinite;
+}
+
+@keyframes blinkAnimation {
+  0% {
+    opacity: 1;
   }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@media (max-width: 480px) {
+    
+}
+
+.timechart.dark--mode {
+    background-color: #000000;
+    color: #ffffff;
+  }
+
+  /*.chartBox0 {
+    width:50px;
+    margin-left: 90px;
+    padding: 20px;
+    border-radius: 20px;
+    border: solid 3px rgba(54, 162, 235, 1);
+    background: white;
+  }*/
+
+ 
+  
+  #statusCircle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  
   
 
 /* Responsive styles for phones */
@@ -366,6 +399,16 @@ a.active{
     border-color: rgba(60, 163, 232, 0.5);
     background: var(--bg-color-first);
     color: var(--text-color-first);
+  }
+
+  .dark--mode .chartBox1 {
+    border-color: rgba(60, 163, 232, 0.5);
+    background: var(--bg-color-first);
+    color: var(--text-color-first);
+  }
+
+  .body.dark--mode .timechart {
+    background-color: #000000;
   }
 
 tr{
