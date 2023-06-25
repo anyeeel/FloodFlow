@@ -15,8 +15,8 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org");
 const int triggerPin = D7;  // Trigger pin of the ultrasonic sensor
 const int echoPin = D6;     // Echo pin of the ultrasonic sensor
 
-const char* ssid = "PLDTHOMEFIBRdKnC8";
-const char* password = "PLDTWIFI838qF";
+const char* ssid = "B310_74CBE";
+const char* password = "4AETY8T3BQR";
 
 // Firebase configuration
 #define FIREBASE_API_KEY "AIzaSyDCZAR5sLXy_H2bwkwSAJ0g2lgiR0MuwlI"
@@ -119,10 +119,12 @@ float previousDistance = 0;  // Variable to store the previous distance value
 
     // Determine the status
     String status;
-    if (waterLevel <= 12) {
+    if (waterLevel <=8){
       status = "Normal";
-    } else if (waterLevel <= 17) {
+    } else if (waterLevel <= 12) {
       status = "Warning";
+    } else if (waterLevel <= 17) {
+      status = "Evacuate";
     } else {
       status = "Danger";
     }
